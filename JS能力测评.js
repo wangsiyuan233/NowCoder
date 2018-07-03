@@ -597,14 +597,27 @@ function iterate(obj){
   return arr;
 }
 
-// 题目：
-// 描述：
+// 题目三十四：判断是否包含数字
+// 描述：给定字符串 str，检查其是否包含数字，包含返回 true，否则返回 false
 
-// 题目：
-// 描述：
+function containsNumber(str){
+  var b = /\d/;
+  return b.test(str);
+}
 
-// 题目：
-// 描述：
+// 题目三十五：检查重复字符串
+// 描述：给定字符串 str，检查其是否包含连续重复的字母（a-zA-Z），包含返回 true，否则返回 false
+
+// 在正则表达式中，利用()进行分组，使用斜杠加数字表示引用，\1就是引用第一个分组，\2就是引用第二个分组。将[a-zA-Z]做为一个分组，然后引用，就可以判断是否有连续重复的字母。
+
+function containsRepeatingLetter(str){
+  return /([a-zA-Z])\1/.test(str);
+}
+
+// 题目三十六：判断是否以元音字母结尾
+// 描述：给定字符串 str，检查其是否以元音字母结尾
+// 1、元音字母包括 a，e，i，o，u，以及对应的大写
+// 2、包含返回 true，否则返回 false
 
 // 题目：
 // 描述：
