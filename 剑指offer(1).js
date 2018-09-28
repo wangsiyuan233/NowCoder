@@ -96,10 +96,25 @@ function pop(){
 
 // 题目六：旋转数组的最小数字
 // 描述：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
-function minNumberInRotateArray(rotateArray){
-  if(rotateArray.length==0) return 0;
-  var minNum=Math.min.apply(Math,rotateArray);
-  return minNum;
+//二分查找法
+function minNumberInRotateArray(arr){
+    //二分查找
+    let len = arr.length;
+    if(len == 0)  return 0;
+    let low = 0, high = len - 1;//???
+    while(low < high) {
+      //Math.floor() 返回小于或等于一个给定数字的最大整数。
+        let mid = low + Math.floor((high-low)/2);
+        if(arr[mid] > arr[high]) {
+            low = mid + 1;
+        } else if(arr[mid] == arr[high]) {
+            high = high - 1;
+        } else {
+            high = mid;
+        }
+    }
+
+    return arr[low];
 }
 
 
@@ -121,18 +136,87 @@ function Fibonacci(n){
   }
 }
 
+// 题目八：跳台阶 p77
+// 描述：一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+function jumpFloor(number){
+  if(number === 1) return 1;
+  if(number === 2) return 2;
+  let two_step = 1, one_step = 2;
+  let next = 0 ;
+  for(let i = 2; i < number; i++){
+    // ????
+    next = two_step + one_step;
+    two_step = one_step;
+    one_step = next;
+  }
+  return next;
+}
 
 
-// 题目
-// 描述：
+
+// 题目九：变态跳台阶 p78
+// 描述：一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+// 因为n级台阶，第一步有n种跳法：跳1级、跳2级、到跳n级
+//跳1级，剩下n-1级，则剩下跳法是f(n-1)
+//跳2级，剩下n-2级，则剩下跳法是f(n-2)
+//所以f(n)=f(n-1)+f(n-2)+...+f(1)
+//因为f(n-1)=f(n-2)+f(n-3)+...+f(1)
+//所以f(n)=2*f(n-1)
+
+function jumpFloorII(number){
+  if(number <= 1){
+    return 1
+  }else{
+    return 2*jumpFloorII(number - 1);
+  }
+}
 
 
-// 题目
-// 描述：
+// 题目十：矩形覆盖 p79
+// 描述：我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
+function rectCover(number){
+  if(number <= 2){
+    return number;
+  }
+  var one = 1;
+  var two = 2;
+  //为什么上面的青蛙跳的 next 是 0；
+  var result = 1;
+  for(var i = 3; i <= number; i++){
+    //???
+    result = one + two;
+    one = two;
+    two = result;
+  }
+  return result;
+}
 
+// 题目十一：二进制中1的个数 p100
+// 描述：输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
 
-// 题目
-// 描述：
+//常规解法
+function NumberOf1(n){
+  var count = 0, flag = 1;
+  while(flag){
+    if(n&flag)count++;
+    flag = flag << 1;
+  }
+  return count;
+}
+
+//高级解法
+// 如果一个整数不为0，那么这个整数至少有一位是1。如果我们把这个整数减1，那么原来处在整数最右边的1就会变为0，原来在1后面的所有的0都会变成1(如果最右边的1后面还有0的话)。其余所有位将不会受到影响。
+// 举个例子：一个二进制数1100，从右边数起第三位是处于最右边的一个1。减去1后，第三位变成0，它后面的两位0变成了1，而前面的1保持不变，因此得到的结果是1011.我们发现减1的结果是把最右边的一个1开始的所有位都取反了。这个时候如果我们再把原来的整数和减去1之后的结果做与运算，从原来整数最右边一个1那一位开始所有位都会变成0。如1100&1011=1000.也就是说，把一个整数减去1，再和原整数做与运算，会把该整数最右边一个1变成0.那么一个整数的二进制有多少个1，就可以进行多少次这样的操作。
+function NumberOf1(n){
+    // write code here
+  var count = 0;
+  while (n){
+   count++;
+   n = (n-1)&n;//把最右边的一个1变成0
+}
+  return count;
+}
 
 
 // 题目
