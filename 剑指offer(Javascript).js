@@ -519,23 +519,27 @@ function Verify(sequence){
     var left=[];
     var right=[];
 
+    // 左子树小于根节点
     for(var i=0; i<sequence.length; i++){
         if(sequence[i]>=root){//[0,i-1]就是左子树，[i,length-1]右子树
-            left=sequence.slice(0,i);
+            left=sequence.slice(0,i);// 这里没有 i
             right=sequence.slice(i,sequence.length-1);//注意slice是左闭右开
             break;
         }
     }
 
+
     if(right.length===0){
         return true;
     }
 
+    // 右子树大于根节点
     for(var j=i;j<sequence.length-1;j++){ //刚开始写的right.length
         if(sequence[j]<root){ //不是right[j]而是sequence[j];
             return false;
         }
     }
+
 
     var leftResult = Verify(left);
     var rightResult = Verify(right);
